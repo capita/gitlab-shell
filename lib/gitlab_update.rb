@@ -1,5 +1,6 @@
 require_relative 'gitlab_init'
 require_relative 'gitlab_net'
+require_relative 'gitlab_hipchat'
 
 class GitlabUpdate
   attr_reader :config
@@ -31,6 +32,7 @@ class GitlabUpdate
     if ssh?
       if api.allowed?('git-receive-pack', @repo_name, @key_id, @branch_name)
         update_redis
+	notify_hipchat
         exit 0
       else
         puts "GitLab: You are not allowed to access #{@branch_name}! "
@@ -38,6 +40,7 @@ class GitlabUpdate
       end
     else
       update_redis
+      notify_hipchat
       exit 0
     end
   end
@@ -59,7 +62,7 @@ class GitlabUpdate
 
   def notify_hipchat
     return if config.hipchat == {}
-    client = GitlabHipchat.new(config.hipchat[:token], config.hipchat[:room_id])
-    client.notify_change(@repo_name, @branch_name, @old_rev, @new_rev)
+    client = GitlabHipchat.new(config.hipchat['token'], config.hipchat['room_id'])
+    client.notify_change(@repo_name, @branch_name, @oldrev, @newrev)
   end
 end

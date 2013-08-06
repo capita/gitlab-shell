@@ -1,9 +1,9 @@
 require 'hipchat'
 
 class GitlabHipchat
-  def initialize(token, room_name)
+  def initialize(token, room_id)
     @token = token
-    @room_name = room_name
+    @room_id = room_id
     @username = 'Gitlab'
   end
 
@@ -33,11 +33,11 @@ class GitlabHipchat
     @client ||= HipChat::Client.new(token)
   end
 
-  def get_room(client, room_name)
-    @room ||= client.rooms.find { |r| r.name =~ /#{room_name}/i }
+  def get_room(room_id)
+    @room ||= get_client(@token)[room_id]
   end
 
   def send_to_room(message, color=nil)
-    get_client(@token).get_room(@room_name).send @username, message, color
+    get_room(@room_id).send @username, message, color
   end
 end
