@@ -8,9 +8,9 @@ class GitlabHipchat
   end
 
   def notify_change(repo_name, branch_name, old_rev, new_rev)
-    if old_rev.include?('000000000')
+    if new_rev.include?('000000000')
       # Branch is being removed
-      send_to_room "#{repo_name} remote branch #{branch} has been deleted", 'red'
+      send_to_room "#{repo_name} remote branch #{branch_name} has been deleted", 'red'
     else
       # Branch is being created
       if old_rev.include?('000000000')
@@ -38,6 +38,6 @@ class GitlabHipchat
   end
 
   def send_to_room(message, color=nil)
-    get_room(@room_id).send @username, message, color
+    get_room(@room_id).send @username, message, color: color
   end
 end
