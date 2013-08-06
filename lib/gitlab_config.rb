@@ -43,6 +43,10 @@ class GitlabConfig
     @config['audit_usernames'] ||= false
   end
 
+  def hipchat
+    @config['hipchat'] ||= {}
+  end
+
   # Build redis command to write update event in gitlab queue
   def redis_command
     if redis.empty?

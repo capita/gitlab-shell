@@ -1,5 +1,7 @@
 source "http://rubygems.org"
 
+gem 'hipchat'
+
 group :development do
   gem 'coveralls', require: false
   gem 'rspec'

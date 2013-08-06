@@ -56,4 +56,10 @@ class GitlabUpdate
     command = "#{config.redis_command} rpush '#{config.redis_namespace}:queue:post_receive' '{\"class\":\"PostReceive\",\"args\":[\"#{@repo_path}\",\"#{@oldrev}\",\"#{@newrev}\",\"#{@refname}\",\"#{@key_id}\"]}' > /dev/null 2>&1"
     system(command)
   end
+
+  def notify_hipchat
+    return if config.hipchat == {}
+    client = GitlabHipchat.new(config.hipchat[:token], config.hipchat[:room_id])
+    client.notify_change(@repo_name, @branch_name, @old_rev, @new_rev)
+  end
 end

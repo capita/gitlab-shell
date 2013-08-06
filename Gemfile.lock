@@ -20,11 +20,17 @@ GEM
     guard-rspec (2.1.2)
       guard (>= 1.1)
       rspec (~> 2.11)
+    hipchat (0.11.0)
+      httparty
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     listen (0.5.3)
     lumberjack (1.0.2)
     method_source (0.8.1)
     mime-types (1.21)
     multi_json (1.6.1)
+    multi_xml (0.5.5)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -57,6 +63,7 @@ DEPENDENCIES
   coveralls
   guard
   guard-rspec
+  hipchat
   rspec
   vcr
   webmock
